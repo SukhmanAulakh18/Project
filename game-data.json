@@ -1,0 +1,104 @@
+{
+  "scenarios": [
+    {
+      "id": "1",
+      "text": "In the bustling city of New York, Sarah decided to start a small bakery business last summer because she wanted to share her passion for baking with others.",
+      "who": "Sarah",
+      "what": "started a small bakery business",
+      "when": "last summer",
+      "why": "to share her passion for baking with others",
+      "incorrect": {
+        "who": ["John", "The mayor", "A group of investors"],
+        "what": ["opened a bookstore", "organized a food festival", "launched a tech startup"],
+        "when": ["five years ago", "during the winter", "on New Year's Eve"],
+        "why": ["to make quick money", "to win a bet", "to impress her parents"]
+      }
+    },
+    {
+      "id": "2",
+      "text": "During the COVID-19 pandemic, many companies shifted to remote work to ensure the safety of their employees and comply with government regulations.",
+      "who": "Many companies",
+      "what": "shifted to remote work",
+      "when": "during the COVID-19 pandemic",
+      "why": "to ensure safety and comply with regulations",
+      "incorrect": {
+        "who": ["The government", "Small businesses only", "Educational institutions"],
+        "what": ["increased office hours", "hired more staff", "suspended operations"],
+        "when": ["in the 1990s", "last year", "during the summer vacation"],
+        "why": ["to reduce operational costs", "to test a new management style", "to attract younger employees"]
+      }
+    },
+    {
+      "id": "3",
+      "text": "In 1969, Neil Armstrong became the first person to walk on the moon as part of NASA's Apollo 11 mission, fulfilling humanity's long-held dream of lunar exploration.",
+      "who": "Neil Armstrong",
+      "what": "became the first person to walk on the moon",
+      "when": "in 1969",
+      "why": "as part of NASA's Apollo 11 mission",
+      "incorrect": {
+        "who": ["Buzz Aldrin", "Yuri Gagarin", "John Glenn"],
+        "what": ["orbited the Earth", "landed on Mars", "discovered a new planet"],
+        "when": ["in 1955", "during World War II", "at the turn of the century"],
+        "why": ["to win a bet with the Soviet Union", "to film a movie", "to test a new spacesuit"]
+      }
+    },
+    {
+      "id": "4",
+      "text": "Greta Thunberg, a young climate activist, began her school strike for climate in 2018 to raise awareness about the urgent need for action on climate change.",
+      "who": "Greta Thunberg",
+      "what": "began her school strike for climate",
+      "when": "in 2018",
+      "why": "to raise awareness about climate change",
+      "incorrect": {
+        "who": ["Emma Watson", "Malala Yousafzai", "A group of scientists"],
+        "what": ["wrote a bestselling book", "organized a global conference", "invented a new clean energy source"],
+        "when": ["in the early 2000s", "last month", "during the Industrial Revolution"],
+        "why": ["to become famous", "to skip school", "to protest against standardized testing"]
+      }
+    },
+    {
+      "id": "5",
+      "text": "The Wright brothers successfully flew the first powered aircraft in 1903, revolutionizing transportation and paving the way for modern aviation.",
+      "who": "The Wright brothers",
+      "what": "flew the first powered aircraft",
+      "when": "in 1903",
+      "why": "revolutionizing transportation",
+      "incorrect": {
+        "who": ["Thomas Edison", "Henry Ford", "The Boeing Company"],
+        "what": ["invented the automobile", "built the first submarine", "created the first computer"],
+        "when": ["during World War I", "in the Renaissance period", "at the beginning of the 21st century"],
+        "why": ["to win a government contract", "to break the sound barrier", "to explore the deep sea"]
+      }
+    }
+  ],
+  "stories": [
+    {
+      "id": "1",
+      "text": "In the quiet town of Millbrook, nestled in the heart of the countryside, lived an elderly man named George. Every morning at sunrise, George would take a leisurely stroll through the town's central park. He had been following this routine for decades, ever since he retired from his job as a school teacher. The park was his sanctuary, a place where he could reflect on life and enjoy the simple pleasures of nature. One particularly chilly autumn morning, as the leaves crunched beneath his feet, George noticed something unusual. A small, ornate box lay hidden beneath a park bench. Curiosity got the better of him, and he carefully picked it up. Inside, he found a collection of old letters, yellowed with age but still legible. As he read through them, he realized they were love letters exchanged between two young people during World War II. Moved by the heartfelt words and the story they told, George decided to embark on a mission to find the descendants of these star-crossed lovers and return the precious memories to their rightful owners.",
+      "who": "George",
+      "what": "found a box of old love letters",
+      "when": "on a chilly autumn morning",
+      "why": "to return the memories to their rightful owners",
+      "incorrect": {
+        "who": ["A young boy", "The town mayor", "A group of tourists"],
+        "what": ["planted a rare flower", "organized a community event", "discovered a time capsule"],
+        "when": ["during a hot summer day", "on New Year's Eve", "in the middle of a snowstorm"],
+        "why": ["to solve a mystery", "to win a contest", "to write a novel"]
+      }
+    },
+    {
+      "id": "2",
+      "text": "In the year 2045, Dr. Amelia Chen made a groundbreaking discovery that would change the course of human history. Working tirelessly in her lab for the past decade, she had finally developed a revolutionary clean energy source that could power entire cities without any harmful emissions. The inspiration for her work came from a childhood spent in a polluted industrial town, where she witnessed firsthand the devastating effects of environmental degradation. As news of her invention spread, governments and corporations worldwide clamored to implement her technology. Within a few years, the global energy landscape had transformed dramatically, leading to cleaner air, healthier ecosystems, and a renewed hope for the planet's future. Dr. Chen's invention not only solved the world's energy crisis but also inspired a new generation of scientists to tackle humanity's greatest challenges.",
+      "who": "Dr. Amelia Chen",
+      "what": "developed a revolutionary clean energy source",
+      "when": "in the year 2045",
+      "why": "to solve the world's energy crisis and environmental problems",
+      "incorrect": {
+        "who": ["A team of NASA scientists", "An anonymous hacker", "The United Nations"],
+        "what": ["discovered a new planet", "created an artificial intelligence", "invented time travel"],
+        "when": ["during World War III", "at the turn of the 22nd century", "in the ancient past"],
+        "why": ["to become wealthy", "to contact alien life", "to win a Nobel Prize"]
+      }
+    }
+  ]
+}
