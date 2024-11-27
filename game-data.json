@@ -80,7 +80,7 @@
       "when": "on a chilly autumn morning",
       "why": "to return the memories to their rightful owners",
       "incorrect": {
-        "who": ["A young boy", "The town mayor", "A group of tourists"],
+        "who": ["Sarah", "The park ranger", "A group of children"],
         "what": ["planted a rare flower", "organized a community event", "discovered a time capsule"],
         "when": ["during a hot summer day", "on New Year's Eve", "in the middle of a snowstorm"],
         "why": ["to solve a mystery", "to win a contest", "to write a novel"]
@@ -98,6 +98,20 @@
         "what": ["discovered a new planet", "created an artificial intelligence", "invented time travel"],
         "when": ["during World War III", "at the turn of the 22nd century", "in the ancient past"],
         "why": ["to become wealthy", "to contact alien life", "to win a Nobel Prize"]
+      }
+    },
+    {
+      "id": "3",
+      "text": "On a stormy night in 1816, Mary Shelley began writing her iconic novel 'Frankenstein' during a gathering with friends at Villa Diodati near Lake Geneva. The group, which included Lord Byron and Percy Shelley, had been entertaining themselves by reading ghost stories. Byron then proposed a challenge for each of them to write their own supernatural tale. Inspired by discussions of galvanism and the nature of life, and fueled by a vivid nightmare, Mary Shelley started crafting the story that would become one of the earliest examples of science fiction. Her novel explored themes of ambition, responsibility, and the potential dangers of unchecked scientific progress. 'Frankenstein' would go on to captivate readers for generations and spark important debates about the ethical implications of scientific advancement.",
+      "who": "Mary Shelley",
+      "what": "began writing 'Frankenstein'",
+      "when": "on a stormy night in 1816",
+      "why": "inspired by a writing challenge and discussions on science",
+      "incorrect": {
+        "who": ["Lord Byron", "Percy Shelley", "Edgar Allan Poe"],
+        "what": ["painted a masterpiece", "composed a symphony", "discovered electricity"],
+        "when": ["during the French Revolution", "at the dawn of the 20th century", "in the Middle Ages"],
+        "why": ["to win a bet", "to impress her husband", "to exorcise personal demons"]
       }
     }
   ]

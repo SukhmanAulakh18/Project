@@ -1,183 +1,236 @@
+// Game state variables
 let gameData;
 let currentScenario;
-let currentStory;
 let score = 0;
 let scenarioCount = 0;
-let answers = { who: '', what: '', when: '', why: '' };
 
-// Fetch game data from JSON file
-fetch('game-data.json')
-    .then(response => response.json())
-    .then(data => {
-        gameData = data;
-        currentScenario = gameData.scenarios[0];
-        updateScenario();
-    });
+// DOM Element Selectors
+const scenarioTextElement = document.getElementById('scenario-text');
+const optionsArea = document.getElementById('options-area');
+const submitButton = document.getElementById('submit-btn');
+const resetButton = document.getElementById('reset-btn');
+const endButton = document.getElementById('end-btn');
+const scoreElement = document.getElementById('score');
+const scenarioCountElement = document.getElementById('scenario-count');
 
-function updateScenario() {
-    const scenarioText = document.getElementById('scenario-text');
-    scenarioText.style.opacity = '0';
-    setTimeout(() => {
-        scenarioText.textContent = currentScenario.text;
-        scenarioText.style.opacity = '1';
-    }, 300);
+// Drop zones
+const dropZones = {
+    who: document.getElementById('who'),
+    what: document.getElementById('what'),
+    when: document.getElementById('when'),
+    why: document.getElementById('why')
+};
 
-    clearAnswers();
-    clearOptions();
-    createDraggables();
+// Game Initialization
+function initializeGame() {
+    // Fetch game data
+    fetch('game-data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load game data');
+            }
+            return response.json();
+        })
+        .then(data => {
+            gameData = data;
+            resetGame();
+        })
+        .catch(error => {
+            console.error('Game Initialization Error:', error);
+            alert('Failed to load game data. Please refresh the page.');
+        });
 }
 
-function clearAnswers() {
-    answers = { who: '', what: '', when: '', why: '' };
-    const dropZones = document.querySelectorAll('.drop-zone');
-    dropZones.forEach(zone => {
-        while (zone.firstChild) {
-            if (zone.lastChild.tagName !== 'H3') {
-                zone.removeChild(zone.lastChild);
-            } else {
-                break;
-            }
+// Reset Game State
+function resetGame() {
+    score = 0;
+    scenarioCount = 0;
+    scoreElement.textContent = score;
+    scenarioCountElement.textContent = scenarioCount;
+    loadNextScenario();
+}
+
+// Load Next Scenario
+function loadNextScenario() {
+    // Determine scenario source based on current count
+    const totalScenarios = gameData.scenarios.length;
+    const totalStories = gameData.stories.length;
+
+    if (scenarioCount < totalScenarios) {
+        currentScenario = gameData.scenarios[scenarioCount];
+    } else if (scenarioCount < totalScenarios + totalStories) {
+        currentScenario = gameData.stories[scenarioCount - totalScenarios];
+    } else {
+        endGame();
+        return;
+    }
+
+    // Update scenario text
+    scenarioTextElement.textContent = currentScenario.text;
+
+    // Clear previous options and drop zones
+    clearOptionsAndDropZones();
+
+    // Generate and display draggable options
+    generateDraggableOptions();
+}
+
+// Clear Options and Drop Zones
+function clearOptionsAndDropZones() {
+    // Clear options area
+    optionsArea.innerHTML = '';
+
+    // Clear drop zones
+    Object.values(dropZones).forEach(zone => {
+        // Keep only the header, remove all other children
+        while (zone.children.length > 1) {
+            zone.removeChild(zone.lastChild);
         }
     });
 }
 
-function clearOptions() {
-    const optionsArea = document.getElementById('options-area');
-    optionsArea.innerHTML = '';
-}
-
-function createDraggables() {
-    const optionsArea = document.getElementById('options-area');
-    optionsArea.innerHTML = ''; // Clear previous options
-
+// Generate Draggable Options
+function generateDraggableOptions() {
     const allOptions = [];
-    for (const key of ['who', 'what', 'when', 'why']) {
+
+    // Collect correct and incorrect options
+    ['who', 'what', 'when', 'why'].forEach(key => {
         allOptions.push(currentScenario[key]);
-        // Add incorrect options
         allOptions.push(...currentScenario.incorrect[key]);
-    }
+    });
 
-    // Shuffle all options
-    for (let i = allOptions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
-    }
+    // Shuffle options
+    shuffleArray(allOptions);
 
+    // Create draggable elements
     allOptions.forEach((option, index) => {
         const draggable = document.createElement('div');
         draggable.className = 'draggable';
         draggable.textContent = option;
         draggable.draggable = true;
-        draggable.style.animationDelay = `${index * 0.05}s`; // Faster animation
+        draggable.style.animationDelay = `${index * 0.05}s`;
         optionsArea.appendChild(draggable);
     });
 
+    // Initialize Sortable for options and drop zones
+    initializeSortable();
+}
+
+// Shuffle Array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Initialize Sortable for Drag and Drop
+function initializeSortable() {
+    // Options area
     new Sortable(optionsArea, {
         group: 'shared',
         animation: 150,
         ghostClass: 'draggable-ghost'
     });
 
-    const dropZones = document.querySelectorAll('.drop-zone');
-    dropZones.forEach(dropZone => {
-        new Sortable(dropZone, {
+    // Drop zones
+    Object.values(dropZones).forEach(zone => {
+        new Sortable(zone, {
             group: 'shared',
             animation: 150,
             ghostClass: 'draggable-ghost',
             onAdd: function(evt) {
-                const type = evt.to.id;
-                answers[type] = evt.item.textContent;
-                evt.to.classList.add('drag-over');
-                setTimeout(() => evt.to.classList.remove('drag-over'), 300);
-            },
-            onRemove: function(evt) {
-                const type = evt.from.id;
-                answers[type] = '';
+                // Remove existing draggable if present
+                const existingDraggable = zone.querySelector('.draggable');
+                if (existingDraggable) {
+                    zone.removeChild(existingDraggable);
+                }
+                // Ensure the new draggable is the last child
+                zone.appendChild(evt.item);
             }
         });
     });
 }
 
-function nextScenario() {
-    if (scenarioCount === gameData.scenarios.length) {
-        // Switch to stories after all scenarios are completed
-        if (currentStory) {
-            const currentIndex = gameData.stories.findIndex(s => s.id === currentStory.id);
-            currentStory = gameData.stories[(currentIndex + 1) % gameData.stories.length];
-        } else {
-            currentStory = gameData.stories[0];
-        }
-        currentScenario = currentStory;
-    } else {
-        // Move to next scenario
-        const currentIndex = gameData.scenarios.findIndex(s => s.id === currentScenario.id);
-        currentScenario = gameData.scenarios[(currentIndex + 1) % gameData.scenarios.length];
+// Submit Answer
+function submitAnswer() {
+    const answers = {
+        who: getDropZoneAnswer(dropZones.who),
+        what: getDropZoneAnswer(dropZones.what),
+        when: getDropZoneAnswer(dropZones.when),
+        why: getDropZoneAnswer(dropZones.why)
+    };
+
+    // Validate all zones are filled
+    if (!areAllZonesFilled()) {
+        alert('Please fill all drop zones before submitting.');
+        return;
     }
-    updateScenario();
-}
 
-function resetGame() {
-    score = 0;
-    scenarioCount = 0;
-    currentScenario = gameData.scenarios[0];
-    currentStory = null;
-    document.getElementById('score').textContent = score;
-    document.getElementById('scenario-count').textContent = scenarioCount;
-    updateScenario();
-}
+    // Calculate score
+    let correctAnswers = 0;
+    const feedback = [];
 
-function endGame() {
-    const finalScore = Math.round((score / (scenarioCount * 4)) * 100);
-    alert(`Game Over! Your final score is ${score} out of ${scenarioCount * 4} possible points (${finalScore}%).`);
-    resetGame();
-}
-
-// Submit button handler
-document.getElementById('submit-btn').addEventListener('click', function() {
-    let correct = 0;
-    for (const key in answers) {
+    // Check each answer
+    ['who', 'what', 'when', 'why'].forEach(key => {
         if (answers[key] === currentScenario[key]) {
-            correct++;
+            correctAnswers++;
+            feedback.push(`✓ Correct ${key}`);
+        } else {
+            feedback.push(`✗ Incorrect ${key}`);
         }
-    }
-    score += correct;
+    });
+
+    // Update score
+    score += correctAnswers;
+    scoreElement.textContent = score;
     scenarioCount++;
+    scenarioCountElement.textContent = scenarioCount;
 
-    document.getElementById('score').textContent = score;
-    document.getElementById('scenario-count').textContent = scenarioCount;
+    // Show feedback
+    alert(feedback.join('\n'));
 
-    // Animate score change
-    const scoreElement = document.getElementById('score');
+    // Animate score
     scoreElement.classList.add('pulse');
     setTimeout(() => scoreElement.classList.remove('pulse'), 1000);
 
-    nextScenario();
-});
+    // Load next scenario
+    loadNextScenario();
+}
 
-// Reset button handler
-document.getElementById('reset-btn').addEventListener('click', resetGame);
+// Get Answer from Drop Zone
+function getDropZoneAnswer(zone) {
+    const draggableInZone = zone.querySelector('.draggable');
+    return draggableInZone ? draggableInZone.textContent : '';
+}
 
-// End game button handler
-document.getElementById('end-btn').addEventListener('click', endGame);
+// Check if All Zones are Filled
+function areAllZonesFilled() {
+    return Object.values(dropZones).every(zone => zone.querySelector('.draggable'));
+}
 
-// Initial setup
-window.addEventListener('DOMContentLoaded', (event) => {
-    const dropZones = document.querySelectorAll('.drop-zone');
-    dropZones.forEach(dropZone => {
-        new Sortable(dropZone, {
-            group: 'shared',
-            animation: 150,
-            ghostClass: 'draggable-ghost',
-            onAdd: function(evt) {
-                const type = evt.to.id;
-                answers[type] = evt.item.textContent;
-                evt.to.classList.add('drag-over');
-                setTimeout(() => evt.to.classList.remove('drag-over'), 300);
-            },
-            onRemove: function(evt) {
-                const type = evt.from.id;
-                answers[type] = '';
-            }
-        });
-    });
-});
+// End Game
+function endGame() {
+    const totalQuestions = scenarioCount;
+    const percentage = totalQuestions > 0 
+        ? ((score / (totalQuestions * 4)) * 100).toFixed(2) 
+        : 0;
+
+    const message = `Game Over!\n\n` +
+                   `Total Scenarios: ${totalQuestions}\n` +
+                   `Total Score: ${score}\n` +
+                   `Accuracy: ${percentage}%\n\n` +
+                   `Would you like to play again?`;
+
+    if (confirm(message)) {
+        resetGame();
+    }
+}
+
+// Event Listeners
+submitButton.addEventListener('click', submitAnswer);
+resetButton.addEventListener('click', resetGame);
+endButton.addEventListener('click', endGame);
+
+// Initialize the game when the page loads
+initializeGame();
