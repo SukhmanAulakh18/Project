@@ -6,13 +6,8 @@
       "who": "Sarah",
       "what": "started a small bakery business",
       "when": "last summer",
-      "why": "to share her passion for baking with others",
-      "incorrect": {
-        "who": ["John", "The mayor", "A group of investors"],
-        "what": ["opened a bookstore", "organized a food festival", "launched a tech startup"],
-        "when": ["five years ago", "during the winter", "on New Year's Eve"],
-        "why": ["to make quick money", "to win a bet", "to impress her parents"]
-      }
+      "why": "to share her passion for baking with others"
+  
     },
     {
       "id": "2",
@@ -20,13 +15,7 @@
       "who": "Many companies",
       "what": "shifted to remote work",
       "when": "during the COVID-19 pandemic",
-      "why": "to ensure safety and comply with regulations",
-      "incorrect": {
-        "who": ["The government", "Small businesses only", "Educational institutions"],
-        "what": ["increased office hours", "hired more staff", "suspended operations"],
-        "when": ["in the 1990s", "last year", "during the summer vacation"],
-        "why": ["to reduce operational costs", "to test a new management style", "to attract younger employees"]
-      }
+      "why": "to ensure safety and comply with regulations"
     },
     {
       "id": "3",
@@ -34,13 +23,7 @@
       "who": "Neil Armstrong",
       "what": "became the first person to walk on the moon",
       "when": "in 1969",
-      "why": "as part of NASA's Apollo 11 mission",
-      "incorrect": {
-        "who": ["Buzz Aldrin", "Yuri Gagarin", "John Glenn"],
-        "what": ["orbited the Earth", "landed on Mars", "discovered a new planet"],
-        "when": ["in 1955", "during World War II", "at the turn of the century"],
-        "why": ["to win a bet with the Soviet Union", "to film a movie", "to test a new spacesuit"]
-      }
+      "why": "as part of NASA's Apollo 11 mission"
     },
     {
       "id": "4",
@@ -48,13 +31,7 @@
       "who": "Greta Thunberg",
       "what": "began her school strike for climate",
       "when": "in 2018",
-      "why": "to raise awareness about climate change",
-      "incorrect": {
-        "who": ["Emma Watson", "Malala Yousafzai", "A group of scientists"],
-        "what": ["wrote a bestselling book", "organized a global conference", "invented a new clean energy source"],
-        "when": ["in the early 2000s", "last month", "during the Industrial Revolution"],
-        "why": ["to become famous", "to skip school", "to protest against standardized testing"]
-      }
+      "why": "to raise awareness about climate change"
     },
     {
       "id": "5",
@@ -62,13 +39,7 @@
       "who": "The Wright brothers",
       "what": "flew the first powered aircraft",
       "when": "in 1903",
-      "why": "revolutionizing transportation",
-      "incorrect": {
-        "who": ["Thomas Edison", "Henry Ford", "The Boeing Company"],
-        "what": ["invented the automobile", "built the first submarine", "created the first computer"],
-        "when": ["during World War I", "in the Renaissance period", "at the beginning of the 21st century"],
-        "why": ["to win a government contract", "to break the sound barrier", "to explore the deep sea"]
-      }
+      "why": "revolutionizing transportation"
     }
   ],
   "stories": [
@@ -78,13 +49,7 @@
       "who": "George",
       "what": "found a box of old love letters",
       "when": "on a chilly autumn morning",
-      "why": "to return the memories to their rightful owners",
-      "incorrect": {
-        "who": ["Sarah", "The park ranger", "A group of children"],
-        "what": ["planted a rare flower", "organized a community event", "discovered a time capsule"],
-        "when": ["during a hot summer day", "on New Year's Eve", "in the middle of a snowstorm"],
-        "why": ["to solve a mystery", "to win a contest", "to write a novel"]
-      }
+      "why": "to return the memories to their rightful owners"
     },
     {
       "id": "2",
@@ -92,13 +57,7 @@
       "who": "Dr. Amelia Chen",
       "what": "developed a revolutionary clean energy source",
       "when": "in the year 2045",
-      "why": "to solve the world's energy crisis and environmental problems",
-      "incorrect": {
-        "who": ["A team of NASA scientists", "An anonymous hacker", "The United Nations"],
-        "what": ["discovered a new planet", "created an artificial intelligence", "invented time travel"],
-        "when": ["during World War III", "at the turn of the 22nd century", "in the ancient past"],
-        "why": ["to become wealthy", "to contact alien life", "to win a Nobel Prize"]
-      }
+      "why": "to solve the world's energy crisis and environmental problems"
     },
     {
       "id": "3",
@@ -106,13 +65,7 @@
       "who": "Mary Shelley",
       "what": "began writing 'Frankenstein'",
       "when": "on a stormy night in 1816",
-      "why": "inspired by a writing challenge and discussions on science",
-      "incorrect": {
-        "who": ["Lord Byron", "Percy Shelley", "Edgar Allan Poe"],
-        "what": ["painted a masterpiece", "composed a symphony", "discovered electricity"],
-        "when": ["during the French Revolution", "at the dawn of the 20th century", "in the Middle Ages"],
-        "why": ["to win a bet", "to impress her husband", "to exorcise personal demons"]
-      }
+      "why": "inspired by a writing challenge and discussions on science"
     }
   ]
 }

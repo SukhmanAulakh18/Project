@@ -12,6 +12,10 @@ const resetButton = document.getElementById('reset-btn');
 const endButton = document.getElementById('end-btn');
 const scoreElement = document.getElementById('score');
 const scenarioCountElement = document.getElementById('scenario-count');
+const feedbackElement = document.getElementById('feedback');
+const modal = document.getElementById('feedback-modal');
+const modalFeedback = document.getElementById('modal-feedback');
+const modalClose = document.getElementById('modal-close');
 
 // Drop zones
 const dropZones = {
@@ -23,7 +27,6 @@ const dropZones = {
 
 // Game Initialization
 function initializeGame() {
-    // Fetch game data
     fetch('game-data.json')
         .then(response => {
             if (!response.ok) {
@@ -37,7 +40,7 @@ function initializeGame() {
         })
         .catch(error => {
             console.error('Game Initialization Error:', error);
-            alert('Failed to load game data. Please refresh the page.');
+            showModal('Failed to load game data. Please refresh the page.');
         });
 }
 
@@ -52,7 +55,6 @@ function resetGame() {
 
 // Load Next Scenario
 function loadNextScenario() {
-    // Determine scenario source based on current count
     const totalScenarios = gameData.scenarios.length;
     const totalStories = gameData.stories.length;
 
@@ -65,44 +67,26 @@ function loadNextScenario() {
         return;
     }
 
-    // Update scenario text
     scenarioTextElement.textContent = currentScenario.text;
-
-    // Clear previous options and drop zones
     clearOptionsAndDropZones();
-
-    // Generate and display draggable options
     generateDraggableOptions();
 }
 
 // Clear Options and Drop Zones
 function clearOptionsAndDropZones() {
-    // Clear options area
     optionsArea.innerHTML = '';
-
-    // Clear drop zones
     Object.values(dropZones).forEach(zone => {
-        // Keep only the header, remove all other children
-        while (zone.children.length > 1) {
-            zone.removeChild(zone.lastChild);
-        }
+        const label = zone.querySelector('h3');
+        zone.innerHTML = '';
+        zone.appendChild(label);
     });
 }
 
 // Generate Draggable Options
 function generateDraggableOptions() {
-    const allOptions = [];
-
-    // Collect correct and incorrect options
-    ['who', 'what', 'when', 'why'].forEach(key => {
-        allOptions.push(currentScenario[key]);
-        allOptions.push(...currentScenario.incorrect[key]);
-    });
-
-    // Shuffle options
+    const allOptions = ['who', 'what', 'when', 'why'].map(key => currentScenario[key]);
     shuffleArray(allOptions);
 
-    // Create draggable elements
     allOptions.forEach((option, index) => {
         const draggable = document.createElement('div');
         draggable.className = 'draggable';
@@ -112,7 +96,6 @@ function generateDraggableOptions() {
         optionsArea.appendChild(draggable);
     });
 
-    // Initialize Sortable for options and drop zones
     initializeSortable();
 }
 
@@ -126,27 +109,21 @@ function shuffleArray(array) {
 
 // Initialize Sortable for Drag and Drop
 function initializeSortable() {
-    // Options area
     new Sortable(optionsArea, {
         group: 'shared',
         animation: 150,
         ghostClass: 'draggable-ghost'
     });
 
-    // Drop zones
     Object.values(dropZones).forEach(zone => {
         new Sortable(zone, {
             group: 'shared',
             animation: 150,
             ghostClass: 'draggable-ghost',
             onAdd: function(evt) {
-                // Remove existing draggable if present
-                const existingDraggable = zone.querySelector('.draggable');
-                if (existingDraggable) {
-                    zone.removeChild(existingDraggable);
+                if (evt.to.children.length > 2) {
+                    evt.to.removeChild(evt.to.children[1]);
                 }
-                // Ensure the new draggable is the last child
-                zone.appendChild(evt.item);
             }
         });
     });
@@ -161,40 +138,34 @@ function submitAnswer() {
         why: getDropZoneAnswer(dropZones.why)
     };
 
-    // Validate all zones are filled
     if (!areAllZonesFilled()) {
-        alert('Please fill all drop zones before submitting.');
+        showModal('Please fill all drop zones before submitting.');
         return;
     }
 
-    // Calculate score
     let correctAnswers = 0;
     const feedback = [];
 
-    // Check each answer
     ['who', 'what', 'when', 'why'].forEach(key => {
         if (answers[key] === currentScenario[key]) {
             correctAnswers++;
-            feedback.push(`✓ Correct ${key}`);
+            feedback.push(`<p class="correct">✓ ${key.charAt(0).toUpperCase() + key.slice(1)}: Correct</p>`);
         } else {
-            feedback.push(`✗ Incorrect ${key}`);
+            feedback.push(`<p class="incorrect">✗ ${key.charAt(0).toUpperCase() + key.slice(1)}: Incorrect (Correct answer: ${currentScenario[key]})</p>`);
         }
     });
 
-    // Update score
     score += correctAnswers;
     scoreElement.textContent = score;
     scenarioCount++;
     scenarioCountElement.textContent = scenarioCount;
 
-    // Show feedback
-    alert(feedback.join('\n'));
+    showModal(feedback.join(''));
 
-    // Animate score
     scoreElement.classList.add('pulse');
     setTimeout(() => scoreElement.classList.remove('pulse'), 1000);
 
-    // Load next scenario
+    clearOptionsAndDropZones();
     loadNextScenario();
 }
 
@@ -216,21 +187,44 @@ function endGame() {
         ? ((score / (totalQuestions * 4)) * 100).toFixed(2) 
         : 0;
 
-    const message = `Game Over!\n\n` +
-                   `Total Scenarios: ${totalQuestions}\n` +
-                   `Total Score: ${score}\n` +
-                   `Accuracy: ${percentage}%\n\n` +
-                   `Would you like to play again?`;
+    const endGameMessage = `
+        <h2>Game Over!</h2>
+        <p>Total Scenarios: ${totalQuestions}</p>
+        <p>Total Score: ${score}</p>
+        <p>Accuracy: ${percentage}%</p>
+        <button id="play-again">Play Again</button>
+    `;
 
-    if (confirm(message)) {
+    showModal(endGameMessage);
+    document.getElementById('play-again').addEventListener('click', () => {
+        hideModal();
         resetGame();
-    }
+    });
+}
+
+// Show Modal
+function showModal(content) {
+    modalFeedback.innerHTML = content;
+    modal.style.display = 'block';
+}
+
+// Hide Modal
+function hideModal() {
+    modal.style.display = 'none';
 }
 
 // Event Listeners
 submitButton.addEventListener('click', submitAnswer);
 resetButton.addEventListener('click', resetGame);
 endButton.addEventListener('click', endGame);
+modalClose.addEventListener('click', hideModal);
+
+// Close modal when clicking outside of it
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        hideModal();
+    }
+});
 
 // Initialize the game when the page loads
 initializeGame();
