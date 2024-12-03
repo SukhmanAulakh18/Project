@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
-    --background-color: #ecf0f1;
-    --text-color: #34495e;
+    --background-color: #f0f4f8;
+    --text-color: #2c3e50;
     --card-background: #ffffff;
     --drop-zone-border: #bdc3c7;
     --draggable-background: #e74c3c;
@@ -21,28 +21,120 @@ body, html {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     height: 100%;
-    overflow: hidden;
     background-color: var(--background-color);
     color: var(--text-color);
 }
 
+/* Landing Page Styles */
+.landing-page {
+    overflow-y: auto;
+}
+
+.landing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.landing-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.landing-content {
+    flex: 1;
+}
+
+.landing-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.landing-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.feature-list {
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+
+.feature-list li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.feature-list li::before {
+    content: '✓';
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.start-game-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.start-game-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.landing-image {
+    flex: 1;
+}
+
+.preview-image {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.landing-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Game Page Styles */
 .game-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    padding: 10px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 header {
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
 }
 
 .game-title {
     color: var(--primary-color);
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-weight: 700;
 }
 
 main {
@@ -55,9 +147,9 @@ main {
 .card {
     background-color: var(--card-background);
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
     overflow-y: auto;
     max-height: 25vh;
 }
@@ -65,31 +157,32 @@ main {
 .game-area {
     display: flex;
     flex-grow: 1;
-    gap: 10px;
+    gap: 20px;
     overflow: hidden;
 }
 
 #options-area {
     flex: 1;
     overflow-y: auto;
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #drop-zones {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 20px;
 }
 
 .drop-zone {
     background-color: var(--background-color);
     border: 2px dashed var(--drop-zone-border);
     border-radius: 8px;
-    padding: 10px;
-    min-height: 80px;
+    padding: 20px;
+    min-height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -105,8 +198,8 @@ main {
     background-color: var(--draggable-background);
     color: var(--draggable-text);
     border-radius: 5px;
-    padding: 8px;
-    margin-bottom: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
     cursor: move;
     transition: all 0.3s ease;
     animation: fadeIn 0.5s ease-out;
@@ -118,25 +211,25 @@ main {
 }
 
 footer {
-    padding: 10px 0;
+    padding: 20px 0;
 }
 
 .button-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .game-btn {
     flex-grow: 1;
-    padding: 10px;
-    margin: 0 5px;
+    padding: 12px;
+    margin: 0 10px;
     background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
     text-transform: uppercase;
@@ -151,7 +244,8 @@ footer {
 
 #score-display {
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .modal {
@@ -163,36 +257,37 @@ footer {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.5);
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid #888;
     width: 80%;
     max-width: 500px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  #modal-feedback {
+}
+
+#modal-feedback {
     margin-bottom: 20px;
-  }
-  
-  #modal-close {
-    background-color: #4CAF50;
+}
+
+#modal-close {
+    background-color: var(--primary-color);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     float: right;
-  }
-  
-  #modal-close:hover {
-    background-color: #45a049;
-  }
+    transition: all 0.3s ease;
+}
+
+#modal-close:hover {
+    background-color: #2980b9;
+}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -220,6 +315,10 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .landing-main {
+        flex-direction: column;
+    }
+
     .game-area {
         flex-direction: column;
     }
@@ -229,7 +328,7 @@ footer {
     }
 
     .game-btn {
-        font-size: 12px;
-        padding: 8px;
+        font-size: 14px;
+        padding: 10px;
     }
 }

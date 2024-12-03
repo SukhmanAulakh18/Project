@@ -3,57 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WHO? WHAT? WHEN? WHY?</title>
+    <title>WHO? WHAT? WHEN? WHY? - Welcome</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="game-container">
+<body class="landing-page">
+    <div class="landing-container">
         <header>
             <h1 class="game-title">WHO? WHAT? WHEN? WHY?</h1>
         </header>
-        <main>
-            <div id="scenario-card" class="card">
-                <p id="scenario-text"></p>
+        <main class="landing-main">
+            <div class="landing-content">
+                <h2>Welcome to the Ultimate Critical Thinking Game!</h2>
+                <p>Challenge your comprehension skills and dive into exciting scenarios and stories. Can you identify the key elements?</p>
+                <ul class="feature-list">
+                    <li>Engaging scenarios and stories</li>
+                    <li>Drag-and-drop gameplay</li>
+                    <li>Test your critical thinking</li>
+                    <li>Track your progress</li>
+                </ul>
+                <a href="game.html" class="start-game-btn">Start Game</a>
             </div>
-            <div class="game-area">
-                <div id="options-area">
-                    <!-- Draggable options will be dynamically added here -->
-                </div>
-                <div id="drop-zones">
-                    <div id="who" class="drop-zone">
-                        <h3>Who</h3>
-                    </div>
-                    <div id="what" class="drop-zone">
-                        <h3>What</h3>
-                    </div>
-                    <div id="when" class="drop-zone">
-                        <h3>When</h3>
-                    </div>
-                    <div id="why" class="drop-zone">
-                        <h3>Why</h3>
-                    </div>
-                </div>
-                <div id="feedback-modal" class="modal">
-                    <div class="modal-content">
-                      <h2>Feedback</h2>
-                      <div id="modal-feedback"></div>
-                      <button id="modal-close">Close</button>
-                    </div>
-                  </div>
+            <div class="landing-image">
+                <img src="images/game-preview.png" alt="Game Preview" class="preview-image">
             </div>
         </main>
-        <footer>
-            <div class="button-container">
-                <button id="submit-btn" class="game-btn">Submit</button>
-                <button id="reset-btn" class="game-btn">Reset</button>
-                <button id="end-btn" class="game-btn">End</button>
-            </div>
-            <div id="score-display">
-                <p>Score: <span id="score">0</span> | Scenario: <span id="scenario-count">0</span></p>
-            </div>
+        <footer class="landing-footer">
+            <p>&copy; 2023 WHO? WHAT? WHEN? WHY? All rights reserved.</p>
         </footer>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
