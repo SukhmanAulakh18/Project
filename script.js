@@ -12,7 +12,6 @@ const resetButton = document.getElementById('reset-btn');
 const endButton = document.getElementById('end-btn');
 const scoreElement = document.getElementById('score');
 const scenarioCountElement = document.getElementById('scenario-count');
-const feedbackElement = document.getElementById('feedback');
 const modal = document.getElementById('feedback-modal');
 const modalFeedback = document.getElementById('modal-feedback');
 const modalClose = document.getElementById('modal-close');
@@ -37,11 +36,56 @@ function initializeGame() {
         .then(data => {
             gameData = data;
             resetGame();
+            setupDragAndDrop();
         })
         .catch(error => {
             console.error('Game Initialization Error:', error);
             showModal('Failed to load game data. Please refresh the page.');
         });
+}
+
+// Setup Drag and Drop Event Listeners
+function setupDragAndDrop() {
+    // Prevent default drag behaviors
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('draggable')) {
+            e.dataTransfer.setData('text/plain', e.target.textContent);
+        }
+    });
+
+    // Drag over event to allow dropping
+    Object.values(dropZones).forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        // Drop event handler
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text/plain');
+
+            // Find the original draggable element in the options area or other drop zones
+            const originalDraggable = document.querySelector(`.draggable[data-content="${data}"]`);
+
+            if (originalDraggable) {
+                // If the drop zone already has an option, move it back to the options area
+                const existingDraggable = zone.querySelector('.draggable');
+                if (existingDraggable) {
+                    optionsArea.appendChild(existingDraggable);
+                }
+
+                // Add the new option to the drop zone
+                zone.appendChild(originalDraggable);
+            }
+        });
+    });
+
+    // Drag start for options area
+    optionsArea.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('draggable')) {
+            e.dataTransfer.setData('text/plain', e.target.textContent);
+        }
+    });
 }
 
 // Reset Game State
@@ -92,11 +136,17 @@ function generateDraggableOptions() {
         draggable.className = 'draggable';
         draggable.textContent = option;
         draggable.draggable = true;
+        draggable.setAttribute('data-content', option);
         draggable.style.animationDelay = `${index * 0.05}s`;
+
+        // Prevent text selection to improve drag experience
+        draggable.style.userSelect = 'none';
+        draggable.style.webkitUserSelect = 'none';
+        draggable.style.mozUserSelect = 'none';
+        draggable.style.msUserSelect = 'none';
+
         optionsArea.appendChild(draggable);
     });
-
-    initializeSortable();
 }
 
 // Shuffle Array
@@ -105,28 +155,6 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-}
-
-// Initialize Sortable for Drag and Drop
-function initializeSortable() {
-    new Sortable(optionsArea, {
-        group: 'shared',
-        animation: 150,
-        ghostClass: 'draggable-ghost'
-    });
-
-    Object.values(dropZones).forEach(zone => {
-        new Sortable(zone, {
-            group: 'shared',
-            animation: 150,
-            ghostClass: 'draggable-ghost',
-            onAdd: function(evt) {
-                if (evt.to.children.length > 2) {
-                    evt.to.removeChild(evt.to.children[1]);
-                }
-            }
-        });
-    });
 }
 
 // Submit Answer
